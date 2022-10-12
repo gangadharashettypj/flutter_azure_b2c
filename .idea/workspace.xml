@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7fc40658-0e6b-4fef-8a40-a2203bf295ca" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/nodriver/flutter_azure_b2c/B2CPlugin.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/nodriver/flutter_azure_b2c/B2CPlugin.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/runConfigurations/example_lib_main_dart.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/android/src/main/kotlin/com/nodriver/flutter_azure_b2c/B2CProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/android/src/main/kotlin/com/nodriver/flutter_azure_b2c/B2CProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/B2CAccessToken.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/B2CAccessToken.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/flutter_azure_b2c.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_azure_b2c.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/flutter_azure_b2c_web.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_azure_b2c_web.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,5 +67,17 @@
     <layout>
       <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
     </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>
