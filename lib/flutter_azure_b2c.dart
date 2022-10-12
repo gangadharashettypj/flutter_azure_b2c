@@ -351,6 +351,27 @@ class AzureB2C {
       return null;
   }
 
+  /// Returns subject's stored access-token.
+  ///
+  /// Returns a [Future] containing a [B2CAccessToken] object or [null] if the
+  /// subject does not exists.
+  ///
+  /// See also:
+  ///   * [B2CAccessToken]
+  ///
+  static Future<B2CIdToken?> getIdToken(String subject) async {
+    print("[AzureB2C] [getB2CIdToken] invoked...");
+    var args = {"subject": subject};
+    var rawRes = await _channel.invokeMethod('getIdToken', args);
+
+    if (rawRes != null) {
+      final Map<String, dynamic>? res = json.decode(rawRes);
+      print("[AzureB2C] [getIdToken] data: $res");
+      return B2CIdToken.fromJson(res!);
+    } else
+      return null;
+  }
+
   /// Get the provider configuration (i.e. a compact representation, NOT the
   /// full MSAL configuration).
   ///

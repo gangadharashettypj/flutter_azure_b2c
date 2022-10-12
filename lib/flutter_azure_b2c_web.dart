@@ -138,6 +138,16 @@ class B2CPluginWeb {
         }
         throw Exception("Subject or AccessToken not exists");
 
+      case 'getIdToken':
+        var args = call.arguments;
+        String subject = args["subject"];
+
+        var res = _provider.getIdToken(subject);
+        if (res != null) {
+          return json.encode(res);
+        }
+        throw Exception("Subject or IdToken not exists");
+
       case 'getConfiguration':
         var res = _provider.getConfiguration();
         if (res != null) {

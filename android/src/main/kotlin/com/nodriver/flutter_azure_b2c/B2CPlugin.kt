@@ -166,6 +166,22 @@ class B2CPlugin: FlutterPlugin, MethodCallHandler, ActivityAware {
                     "expire" to PluginUtilities.toIsoFormat(expireDate!!)
                 )))
         }
+        else if (call.method == "getIdToken") {
+            var args = call.arguments as Map<String, Any>
+            var subject = args["subject"] as String
+
+            var idToken = provider.getIdToken(subject)
+
+            if (idToken == null)
+                result.error(
+                    "SubjectNotExist|SubjectNotAuthenticated",
+                    "Unable to find authenticated user: $subject", null)
+            else
+                result.success(json.toJson(mapOf(
+                    "subject" to subject,
+                    "token" to idToken,
+                )))
+        }
         else {
             result.notImplemented()
         }

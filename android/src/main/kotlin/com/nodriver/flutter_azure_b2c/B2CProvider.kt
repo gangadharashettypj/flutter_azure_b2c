@@ -266,6 +266,18 @@ class B2CProvider(
         }
     }
 
+
+    /**
+     * Get the last access token obtained for the user.
+     * @return the accessToken or null if user is not logged in
+     */
+    fun getIdToken(subject: String): String? {
+        synchronized(authResults) {
+            if (!authResults.containsKey(subject)) return null
+            return authResults[subject]!!.account.idToken
+        }
+    }
+
     /**
      * Get the expire date of the last access token obtained for the user.
      * @return the expire date or null if user is not logged in
