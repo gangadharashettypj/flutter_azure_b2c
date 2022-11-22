@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="7fc40658-0e6b-4fef-8a40-a2203bf295ca" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/example/pubspec.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/B2CAccessToken.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/B2CAccessToken.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/flutter_azure_b2c_web.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/flutter_azure_b2c_web.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/web/B2CProviderWeb.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/web/B2CProviderWeb.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pubspec.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -63,7 +63,7 @@ class B2CIdToken {
   late final String token;
 
   /// Access token expiration date in UTC format.
-  late final DateTime expireOn;
+  late final DateTime? expireOn;
 
   /// Creates an access token.
   ///
@@ -78,7 +78,8 @@ class B2CIdToken {
   B2CIdToken.fromJson(Map<String, dynamic> data) {
     this.subject = data["subject"];
     this.token = data["token"];
-    this.expireOn = DateTime.parse(data["expire"]).toUtc();
+    this.expireOn =
+        data["expire"] == null ? null : DateTime.parse(data["expire"]).toUtc();
   }
 
   /// Transform the token to a JSON representation.
@@ -86,6 +87,6 @@ class B2CIdToken {
   Map toJson() => {
         "subject": subject,
         "token": token,
-        "expire": expireOn.toIso8601String()
+        if (expireOn != null) "expire": expireOn!.toIso8601String()
       };
 }
