@@ -54,8 +54,6 @@ class B2CAccessToken {
       };
 }
 
-
-
 /// Access token utility class.
 class B2CIdToken {
   /// Owner of the access token.
@@ -64,25 +62,30 @@ class B2CIdToken {
   /// Access token string.
   late final String token;
 
+  /// Access token expiration date in UTC format.
+  late final DateTime expireOn;
+
   /// Creates an access token.
   ///
   /// The [subject] express the owner of the access token, the [token] argument
   /// is the string representation of the token itself, and [expireOn] indicates
   /// the date-time when the token will expire.
   ///
-  B2CIdToken(this.subject, this.token);
+  B2CIdToken(this.subject, this.token, this.expireOn);
 
   /// Creates an access token from a JSON map.
   ///
   B2CIdToken.fromJson(Map<String, dynamic> data) {
     this.subject = data["subject"];
     this.token = data["token"];
+    this.expireOn = DateTime.parse(data["expire"]).toUtc();
   }
 
   /// Transform the token to a JSON representation.
   ///
   Map toJson() => {
-    "subject": subject,
-    "token": token,
-  };
+        "subject": subject,
+        "token": token,
+        "expire": expireOn.toIso8601String()
+      };
 }

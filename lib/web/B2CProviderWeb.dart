@@ -22,14 +22,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:html';
 
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_azure_b2c/B2CAccessToken.dart';
 import 'package:flutter_azure_b2c/B2CConfiguration.dart';
 import 'package:flutter_azure_b2c/B2COperationResult.dart';
 import 'package:flutter_azure_b2c/B2CUserInfo.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 import 'package:msal_js/msal_js.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 /// Web interaction mode enum.
 enum B2CInteractionMode { REDIRECT, POPUP }
@@ -47,6 +47,7 @@ class B2CProviderWeb {
   PublicClientApplication? _b2cApp;
   Map<String, AccountInfo> _users = {};
   Map<String, B2CAccessToken> _accessTokens = {};
+  Map<String, B2CIdToken> _idTokens = {};
   Configuration? _configuration;
   B2CInteractionMode _interactionMode = B2CInteractionMode.POPUP;
   String? _hostName;
@@ -61,7 +62,8 @@ class B2CProviderWeb {
   static const String _B2C_USER_CANCELLED = "user_cancelled";
   static const String _B2C_PLUGIN_LAST_ACCESS = "b2c_plugin_last_access";
 
-  static final DateFormat _format = DateFormat("E MMM dd yyyy HH:mm:ss Z", "en_US");
+  static final DateFormat _format =
+      DateFormat("E MMM dd yyyy HH:mm:ss Z", "en_US");
 
   /// Creates an istance of the B2CProviderWeb.
   ///
@@ -90,7 +92,6 @@ class B2CProviderWeb {
   ///   requested a password change.
   ///
   Future init(String tag, String configFileName) async {
-
     initializeDateFormatting();
 
     try {
@@ -163,7 +164,8 @@ class B2CProviderWeb {
 
       if (_lastHash != null && _lastHash != "#/") {
         if (_lastHash!.contains(_B2C_PASSWORD_CHANGE)) {
-          window.sessionStorage.removeWhere((key, value) => key.startsWith("msal"));
+          window.sessionStorage
+              .removeWhere((key, value) => key.startsWith("msal"));
 
           _emitCallback(B2COperationResult(
               tag,
@@ -175,6 +177,7 @@ class B2CProviderWeb {
           if (result != null) {
             _users[result.uniqueId] = result.account!;
             _accessTokens[result.uniqueId] = _accessTokenFromAuthResult(result);
+            _idTokens[result.uniqueId] = _idTokenFromAuthResult(result);
 
             // MSAL seams to reload the page after the handleRedirectFuture is
             // completed, so we temporarly store the access token in the local
@@ -248,6 +251,7 @@ class B2CProviderWeb {
 
         _users[result.uniqueId] = result.account!;
         _accessTokens[result.uniqueId] = _accessTokenFromAuthResult(result);
+        _idTokens[result.uniqueId] = _idTokenFromAuthResult(result);
       }
       _emitCallback(B2COperationResult(
           tag,
@@ -341,6 +345,7 @@ class B2CProviderWeb {
         ..authority = _getAuthorityFromPolicyName(policyName));
 
       _accessTokens[subject] = _accessTokenFromAuthResult(result);
+      _idTokens[subject] = _idTokenFromAuthResult(result);
 
       _emitCallback(B2COperationResult(
           tag,
@@ -451,6 +456,18 @@ class B2CProviderWeb {
     return null;
   }
 
+  /// Returns subject's stored access-token.
+  ///
+  /// Returns a [B2CAccessToken] object or [null] if the subject does not
+  /// exists.
+  ///
+  B2CAccessToken? getIdToken(String subject) {
+    if (_accessTokens.containsKey(subject)) {
+      return _accessTokens[subject]!;
+    }
+    return null;
+  }
+
   /// Get the provider configuration (i.e. a compact representation, NOT the
   /// full MSAL configuration).
   ///
@@ -484,21 +501,19 @@ class B2CProviderWeb {
   ///   * [AzureB2C] plugin
   static void storeRedirectHash() {
     _lastHash = window.location.hash;
-    if (_lastHash == "#/")
-    {
+    if (_lastHash == "#/") {
       bool interactionWasStarted = false;
       window.sessionStorage.forEach((key, value) {
         //this happens when user click back button on redirect hash
-        if (key.startsWith("msal") && value == "interaction_in_progress")
-        {
+        if (key.startsWith("msal") && value == "interaction_in_progress") {
           interactionWasStarted = true;
-
         }
       });
 
       if (interactionWasStarted) {
         log("User pressed back button, cleaning", name: "B2CProviderWebStatic");
-        window.sessionStorage.removeWhere((key, value) => key.startsWith("msal"));
+        window.sessionStorage
+            .removeWhere((key, value) => key.startsWith("msal"));
       }
     }
 
@@ -507,6 +522,11 @@ class B2CProviderWeb {
 
   B2CAccessToken _accessTokenFromAuthResult(AuthenticationResult result) {
     return B2CAccessToken(result.uniqueId, result.accessToken,
+        _format.parse(result.expiresOn.toString()).toUtc());
+  }
+
+  B2CIdToken _idTokenFromAuthResult(AuthenticationResult result) {
+    return B2CIdToken(result.uniqueId, result.idToken,
         _format.parse(result.expiresOn.toString()).toUtc());
   }
 

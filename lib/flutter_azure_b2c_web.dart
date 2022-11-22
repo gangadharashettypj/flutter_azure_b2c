@@ -20,6 +20,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_azure_b2c/web/B2CProviderWeb.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
@@ -137,6 +138,16 @@ class B2CPluginWeb {
           return json.encode(res);
         }
         throw Exception("Subject or AccessToken not exists");
+
+      case 'getIdToken':
+        var args = call.arguments;
+        String subject = args["subject"];
+
+        var res = _provider.getIdToken(subject);
+        if (res != null) {
+          return json.encode(res);
+        }
+        throw Exception("Subject or IDToken not exists");
 
       case 'getConfiguration':
         var res = _provider.getConfiguration();
